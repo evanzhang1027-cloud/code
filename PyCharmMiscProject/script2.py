@@ -3,10 +3,10 @@ import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
 
-CACHE_FILE = "aapl_2020.csv"
+CACHE_FILE = "team_2024.csv"
 
 df = yf.download(
-    "AAPL",
+    "TEAM",
     start="2020-01-01",
     auto_adjust=False,
     multi_level_index=False,
@@ -14,12 +14,12 @@ df = yf.download(
     threads=False,
 )
 
-def get_aapl_data():
+def get_team_data():
     if os.path.exists(CACHE_FILE):
-        print("Loading saved AAPL data from CSV...")
+        print("Loading saved  data from CSV...")
         return pd.read_csv(CACHE_FILE, index_col=0, parse_dates=True)
 
-    print("Downloading AAPL data...")
+    print("Downloading  data...")
 
 
     if df.empty:
@@ -33,7 +33,7 @@ def get_aapl_data():
 
 
 def main():
-    df = get_aapl_data()
+    df = get_team_data()
 
     df["Close_shifted_1"] = df["Close"].shift(1)
     df["factor"] = df["Adj Close"] / df["Close"]
@@ -44,7 +44,7 @@ def main():
     plt.plot(df.index, df["Close"], label="Close")
     plt.plot(df.index, df["Close_shifted_1"], label="Close shifted by 1", alpha=0.7)
 
-    plt.title("AAPL Close Price")
+    plt.title("TEAM Close Price")
     plt.xlabel("Date")
     plt.ylabel("Price")
     plt.legend()
